@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+
+    <!-- Analog clock size in the the screen saver -->
+    <dimen name="big_font_size">120dp</dimen>
+    <dimen name="widget_big_font_size">106sp</dimen>
+    <dimen name="text_size_21sp">21dp</dimen>
+    <dimen name="text_size_93sp">93dp</dimen>
+    <dimen name="text_size_53sp">53dp</dimen>
+    <dimen name="text_size_20sp">20dp</dimen>
+    <dimen name="text_size_34sp">34dp</dimen>
+    <dimen name="text_size_67sp">67dp</dimen>
+    <dimen name="text_size_45sp">45dp</dimen>
+    <dimen name="text_size_16sp">16dp</dimen>
+    <dimen name="text_size_14sp">14dp</dimen>
+    <dimen name="text_size_27sp">27dp</dimen>
+    <dimen name="text_size_18sp">18dp</dimen>
+    <dimen name="text_size_37sp">37dp</dimen>
+    <dimen name="clock_padding">8dp</dimen>
+    <dimen name="text_size_56sp">56dp</dimen>
+    <dimen name="text_size_48sp">48dp</dimen>
+    <dimen name="text_size_102sp">102dp</dimen>
+    <dimen name="text_size_22sp">22dp</dimen>
+    <dimen name="text_size_90sp">90dp</dimen>
+
+    <!-- Widget dimens -->
+    <dimen name="clock_widget_height">120dp</dimen>
+
+    <!-- Widget sizing best practices
+         from https://developer.android.com/guide/practices/ui_guidelines/widget_design#design -->
+    <dimen name="min_1_cell">40dp</dimen>
+    <dimen name="min_2_cells">110dp</dimen>
+    <dimen name="min_3_cells">280dp</dimen>
+    <dimen name="min_4_cells">250dp</dimen>
+    <!-- n cells 	70 × n − 30 -->
+
+</resources>

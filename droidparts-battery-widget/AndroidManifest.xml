@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="org.droidparts.battery_widget" android:versionName="1.0"
+	android:versionCode="201205220" android:sharedUserId="org.droidparts.battery_widget">
+
+	<supports-screens android:largeScreens="true" android:anyDensity="true" />
+
+	<application android:icon="@drawable/ic_icon"
+		android:label="@string/txt_battery_widget" android:process="org.droidparts.battery_widget">
+
+		<receiver android:name=".BatteryWidgetProvider">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider"
+				android:resource="@xml/battery_widget_info" />
+		</receiver>
+
+		<service android:name=".BatteryService">
+			<intent-filter>
+				<action android:name="org.droidparts.battery_widget.BatteryService" />
+			</intent-filter>
+		</service>
+
+		<activity android:name=".SettingsActivityList"
+			android:label="@string/txt_assigned_activity" />
+
+		<activity android:name=".BatteryWidgetActivity" android:theme="@android:style/Theme.NoTitleBar"
+			android:label="@string/txt_battery_widget">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="org.droidparts.battery_widget/widget" />
+			</intent-filter>
+		</activity>
+
+	</application>
+
+	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
+
+</manifest> 

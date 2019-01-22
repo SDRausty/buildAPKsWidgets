@@ -1,0 +1,10 @@
+git clone https://github.com/lucas-tulio/16-bit-clock
+git clone https://github.com/2dxgujun/AndroidTagGroup
+git clone https://github.com/johannilsson/android-pulltorefresh
+git clone https://github.com/lucas-tulio/decimal-clock-widget
+git clone https://github.com/yanchenko/droidparts-battery-widget
+git clone https://github.com/WeAreFairphone/FP2-ClockWidget
+git clone https://github.com/choose-a/android_packages_apps_MonthCalendarWidget MonthCalendarWidget/choose-a
+git clone https://github.com/romannurik/Android-MonthCalendarWidget MonthCalendarWidget/romannurik
+git clone https://github.com/zcweng/SwitchButton
+git clone https://github.com/lucas-tulio/unix-time-clock-widget

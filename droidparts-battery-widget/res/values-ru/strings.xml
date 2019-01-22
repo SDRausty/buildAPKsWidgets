@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="txt_battery_widget">Battery Widget</string>
+    <string name="txt_configuration">Установки</string>
+    <string name="txt_recommended">Рекомендуемые</string>
+    <string name="txt_other">Другие приложения</string>
+    <string name="txt_assigned_activity">Запускаемое приложение</string>
+    <string name="txt_assigned_activity_descr">Выберите программу, которая будет запущена при нажатии на виджет</string>
+    <string name="txt_select_widget_design">Стиль виджета</string>
+    <string name="btn_done">Готово</string>
+    
+    <string-array name="design_names">
+    	<item>Классический</item> <!-- 0 -->
+    	<item>Классический цветной</item> <!-- 3 -->
+     	<item>Современный</item> <!-- 2 (default) -->
+    	<item>Альтернативный</item> <!-- 1 -->
+    </string-array>
+    
+</resources>

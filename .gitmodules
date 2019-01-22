@@ -1,0 +1,21 @@
+[submodule "16-bit-clock"]
+	path = 16-bit-clock
+	url = https://github.com/lucas-tulio/16-bit-clock
+[submodule "decimal-clock-widget"]
+	path = decimal-clock-widget
+	url = https://github.com/lucas-tulio/decimal-clock-widget
+[submodule "droidparts-battery-widget"]
+	path = droidparts-battery-widget
+	url = https://github.com/yanchenko/droidparts-battery-widget
+[submodule "FP2-ClockWidget"]
+	path = FP2-ClockWidget
+	url = https://github.com/WeAreFairphone/FP2-ClockWidget
+[submodule "MonthCalendarWidget/choose-a"]
+	path = MonthCalendarWidget/choose-a
+	url = https://github.com/choose-a/android_packages_apps_MonthCalendarWidget
+[submodule "MonthCalendarWidget/romannurik"]
+	path = MonthCalendarWidget/romannurik
+	url = https://github.com/romannurik/Android-MonthCalendarWidget
+[submodule "unix-time-clock-widget"]
+	path = unix-time-clock-widget
+	url = https://github.com/lucas-tulio/unix-time-clock-widget

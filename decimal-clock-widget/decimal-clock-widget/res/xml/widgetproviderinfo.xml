@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<appwidget-provider
+   xmlns:android="http://schemas.android.com/apk/res/android" 
+   android:minWidth="110dp"
+   android:minHeight="110dp"
+   android:maxWidth="180dp"
+   android:maxHeight="180dp"
+   android:updatePeriodMillis="8640"
+   android:resizeMode="horizontal|vertical"
+   android:previewImage="@drawable/icon"
+   android:widgetCategory="home_screen"
+   android:initialLayout="@layout/widgetlayout"
+   android:configure="com.lucasdnd.decimaltimeclockwidget.SettingsActivity"
+   >
+</appwidget-provider>

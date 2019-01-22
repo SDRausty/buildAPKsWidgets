@@ -1,0 +1,27 @@
+git submodule add https://github.com/lucas-tulio/16-bit-clock
+git submodule add https://github.com/lucas-tulio/decimal-clock-widget
+git submodule add https://github.com/yanchenko/droidparts-battery-widget
+git submodule add https://github.com/WeAreFairphone/FP2-ClockWidget
+git submodule add https://github.com/choose-a/android_packages_apps_MonthCalendarWidget MonthCalendarWidget/choose-a
+git submodule add https://github.com/romannurik/Android-MonthCalendarWidget MonthCalendarWidget/romannurik
+git submodule add https://github.com/lucas-tulio/unix-time-clock-widget
+# git submodule add https://github.com/zcweng/SwitchButton
+# git submodule add https://github.com/johannilsson/android-pulltorefresh
+# git submodule add https://github.com/2dxgujun/AndroidTagGroup
+# git submodule add https://github.com/Bearded-Hen/Android-Bootstrap
+# git submodule add https://github.com/JakeWharton/ViewPagerIndicator
+# git submodule add https://github.com/ZieIony/Carbon
+# git submodule add https://github.com/alexvasilkov/FoldableLayout
+# /data/data/com.termux/files/home/buildAPKs/buildAPKsWidgets/FoldableLayout/library/src/main/step2.apk
+# git submodule add https://github.com/cristiansan/Clockwidget
+# git submodule add https://github.com/danielribeiro/AndroidBuildWidget
+# git submodule add https://github.com/edmodo/cropper
+# git submodule add https://github.com/faheema/clockwidget
+# git submodule add https://github.com/huanghaibin-dev/CalendarView
+# git submodule add https://github.com/markushi/android-circlebutton
+# /data/data/com.termux/files/home/buildAPKs/buildAPKsWidgets/android-circlebutton/library/src/main/step2.apk
+# git submodule add https://github.com/sephiroth74/ImageViewZoom
+# git submodule add https://github.com/square/android-times-square
+# git submodule add https://github.com/steelkiwi/cropiwa
+# git submodule add https://github.com/zcweng/ToggleButton
+# /data/data/com.termux/files/home/buildAPKs/buildAPKsWidgets/ToggleButton/togglebutton-library/step2.apk
