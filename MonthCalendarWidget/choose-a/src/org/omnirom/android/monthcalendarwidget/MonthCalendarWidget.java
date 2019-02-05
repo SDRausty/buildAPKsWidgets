@@ -39,11 +39,11 @@ import java.util.Calendar;
 
 public class MonthCalendarWidget extends AppWidgetProvider {
     private static final String ACTION_PREVIOUS_MONTH
-            = "com.example.android.monthcalendarwidget.action.PREVIOUS_MONTH";
+        = "com.example.android.monthcalendarwidget.action.PREVIOUS_MONTH";
     private static final String ACTION_NEXT_MONTH
-            = "com.example.android.monthcalendarwidget.action.NEXT_MONTH";
+        = "com.example.android.monthcalendarwidget.action.NEXT_MONTH";
     private static final String ACTION_RESET_MONTH
-            = "com.example.android.monthcalendarwidget.action.RESET_MONTH";
+        = "com.example.android.monthcalendarwidget.action.RESET_MONTH";
 
     private static final String PREF_MONTH = "month";
     private static final String PREF_YEAR = "year";
@@ -59,7 +59,7 @@ public class MonthCalendarWidget extends AppWidgetProvider {
 
     private void redrawWidgets(Context context) {
         int[] appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(
-                new ComponentName(context, MonthCalendarWidget.class));
+                                 new ComponentName(context, MonthCalendarWidget.class));
         for (int appWidgetId : appWidgetIds) {
             drawWidget(context, appWidgetId);
         }
@@ -81,9 +81,9 @@ public class MonthCalendarWidget extends AppWidgetProvider {
             cal.set(Calendar.YEAR, thisYear);
             cal.add(Calendar.MONTH, -1);
             sp.edit()
-                    .putInt(PREF_MONTH, cal.get(Calendar.MONTH))
-                    .putInt(PREF_YEAR, cal.get(Calendar.YEAR))
-                    .apply();
+            .putInt(PREF_MONTH, cal.get(Calendar.MONTH))
+            .putInt(PREF_YEAR, cal.get(Calendar.YEAR))
+            .apply();
             redrawWidgets(context);
 
         } else if (ACTION_NEXT_MONTH.equals(action)) {
@@ -96,9 +96,9 @@ public class MonthCalendarWidget extends AppWidgetProvider {
             cal.set(Calendar.YEAR, thisYear);
             cal.add(Calendar.MONTH, 1);
             sp.edit()
-                    .putInt(PREF_MONTH, cal.get(Calendar.MONTH))
-                    .putInt(PREF_YEAR, cal.get(Calendar.YEAR))
-                    .apply();
+            .putInt(PREF_MONTH, cal.get(Calendar.MONTH))
+            .putInt(PREF_YEAR, cal.get(Calendar.YEAR))
+            .apply();
             redrawWidgets(context);
 
         } else if (ACTION_RESET_MONTH.equals(action)) {
@@ -111,7 +111,7 @@ public class MonthCalendarWidget extends AppWidgetProvider {
     @Override
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
-            int appWidgetId, Bundle newOptions) {
+                                          int appWidgetId, Bundle newOptions) {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
         drawWidget(context, appWidgetId);
     }
@@ -130,7 +130,7 @@ public class MonthCalendarWidget extends AppWidgetProvider {
             mini = minHeightDp <= res.getInteger(R.integer.max_height_mini_view_dp);
             if (mini) {
                 numWeeks = minHeightDp <= res.getInteger(R.integer.max_height_mini_view_1_row_dp)
-                        ? 1 : 2;
+                           ? 1 : 2;
             }
         }
 
@@ -151,7 +151,7 @@ public class MonthCalendarWidget extends AppWidgetProvider {
             thisMonth = cal.get(Calendar.MONTH);
         }
         rv.setTextViewText(R.id.month_label, DateFormat.format(
-                shortMonthName ? "MMM yy" : "MMMM yyyy", cal));
+                               shortMonthName ? "MMM yy" : "MMMM yyyy", cal));
 
         if (!mini) {
             cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -202,11 +202,11 @@ public class MonthCalendarWidget extends AppWidgetProvider {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 cellRv.setOnClickPendingIntent(android.R.id.text1,
-                        PendingIntent.getActivity(context, 0, intent,
-                                PendingIntent.FLAG_UPDATE_CURRENT));
+                                               PendingIntent.getActivity(context, 0, intent,
+                                                       PendingIntent.FLAG_UPDATE_CURRENT));
 
                 cellRv.setTextViewText(android.R.id.text1,
-                        Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
+                                       Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
                 if (isFirstOfMonth) {
                     cellRv.setTextViewText(R.id.month_label, DateFormat.format("MMM", cal));
                 }
@@ -218,21 +218,21 @@ public class MonthCalendarWidget extends AppWidgetProvider {
 
         rv.setViewVisibility(R.id.prev_month_button, mini ? View.GONE : View.VISIBLE);
         rv.setOnClickPendingIntent(R.id.prev_month_button,
-                PendingIntent.getBroadcast(context, 0,
-                        new Intent(context, MonthCalendarWidget.class)
-                                .setAction(ACTION_PREVIOUS_MONTH),
-                        PendingIntent.FLAG_UPDATE_CURRENT));
+                                   PendingIntent.getBroadcast(context, 0,
+                                           new Intent(context, MonthCalendarWidget.class)
+                                           .setAction(ACTION_PREVIOUS_MONTH),
+                                           PendingIntent.FLAG_UPDATE_CURRENT));
         rv.setViewVisibility(R.id.next_month_button, mini ? View.GONE : View.VISIBLE);
         rv.setOnClickPendingIntent(R.id.next_month_button,
-                PendingIntent.getBroadcast(context, 0,
-                        new Intent(context, MonthCalendarWidget.class)
-                                .setAction(ACTION_NEXT_MONTH),
-                        PendingIntent.FLAG_UPDATE_CURRENT));
+                                   PendingIntent.getBroadcast(context, 0,
+                                           new Intent(context, MonthCalendarWidget.class)
+                                           .setAction(ACTION_NEXT_MONTH),
+                                           PendingIntent.FLAG_UPDATE_CURRENT));
         rv.setOnClickPendingIntent(R.id.month_label,
-                PendingIntent.getBroadcast(context, 0,
-                        new Intent(context, MonthCalendarWidget.class)
-                                .setAction(ACTION_RESET_MONTH),
-                        PendingIntent.FLAG_UPDATE_CURRENT));
+                                   PendingIntent.getBroadcast(context, 0,
+                                           new Intent(context, MonthCalendarWidget.class)
+                                           .setAction(ACTION_RESET_MONTH),
+                                           PendingIntent.FLAG_UPDATE_CURRENT));
         rv.setViewVisibility(R.id.month_bar, numWeeks <= 1 ? View.GONE : View.VISIBLE);
         appWidgetManager.updateAppWidget(appWidgetId, rv);
     }

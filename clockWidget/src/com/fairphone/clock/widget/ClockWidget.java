@@ -91,7 +91,7 @@ public class ClockWidget extends AppWidgetProvider {
                 }
             }
         }
-        else{
+        else {
             widget.setViewVisibility(R.id.ampm_text, View.GONE);
         }
 

@@ -47,43 +47,45 @@ import android.widget.TextView;
 
 public class SettingsActivityList extends ExpandableListActivity implements OnClickListener {
 
-	static class Group {
-	    Group(int titleTextId) {this.titleTextId = titleTextId;}
-	    int titleTextId;
-	    ArrayList<ResolveInfo> children = new ArrayList<ResolveInfo>();
-	}
-	
-	static class FeaturedActivity {
-	    FeaturedActivity(String className, String packageName) {
-	        this.className = className;
-	        this.packageName = packageName;
-	    }
-	    String className;
-	    String packageName;
-	}
-	
-	class ExpandableListAdapter extends BaseExpandableListAdapter {
+    static class Group {
+        Group(int titleTextId) {
+            this.titleTextId = titleTextId;
+        }
+        int titleTextId;
+        ArrayList<ResolveInfo> children = new ArrayList<ResolveInfo>();
+    }
 
-	    private final ArrayList<Group> mGroups = new ArrayList<Group>();
-	    private final LayoutInflater mInflater;
-	    
-	    public ExpandableListAdapter(LayoutInflater inflater) {
-	        mInflater = inflater;
-	        
-	        // create featured activities
-	        String[] params;
-	        FeaturedActivity activity;
-	        ArrayList<String> classNames = new ArrayList<String>();
-	        String[] activities = SettingsActivityList.this.getResources().getStringArray(R.array.featured_activities);
-	        for (int i=0; i<activities.length; i++) {
-	            params = TextUtils.split(activities[i], "/");
-	            mFeaturedActivities.add(activity = new FeaturedActivity(params[1], params[0]));
-	            classNames.add(activity.className);
-	        }
-	        mFeaturedClassNames = classNames.toArray(new String[classNames.size()]);
-	        Arrays.sort(mFeaturedClassNames);
-	    }
-	    
+    static class FeaturedActivity {
+        FeaturedActivity(String className, String packageName) {
+            this.className = className;
+            this.packageName = packageName;
+        }
+        String className;
+        String packageName;
+    }
+
+    class ExpandableListAdapter extends BaseExpandableListAdapter {
+
+        private final ArrayList<Group> mGroups = new ArrayList<Group>();
+        private final LayoutInflater mInflater;
+
+        public ExpandableListAdapter(LayoutInflater inflater) {
+            mInflater = inflater;
+
+            // create featured activities
+            String[] params;
+            FeaturedActivity activity;
+            ArrayList<String> classNames = new ArrayList<String>();
+            String[] activities = SettingsActivityList.this.getResources().getStringArray(R.array.featured_activities);
+            for (int i=0; i<activities.length; i++) {
+                params = TextUtils.split(activities[i], "/");
+                mFeaturedActivities.add(activity = new FeaturedActivity(params[1], params[0]));
+                classNames.add(activity.className);
+            }
+            mFeaturedClassNames = classNames.toArray(new String[classNames.size()]);
+            Arrays.sort(mFeaturedClassNames);
+        }
+
         public Object getChild(int groupPosition, int childPosition) {
             return mGroups.get(groupPosition).children.get(childPosition);
         }
@@ -93,16 +95,16 @@ public class SettingsActivityList extends ExpandableListActivity implements OnCl
         }
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
-                ViewGroup parent) {
-            
+                                 ViewGroup parent) {
+
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.activity_item, parent, false);
             }
 
             Group group = mGroups.get(groupPosition);
-            
+
             ActivityInfo activityInfo = group.children.get(childPosition).activityInfo;
-            
+
             ImageView icon = (ImageView) convertView.findViewById(R.id.icon);
             TextView text1 = (TextView) convertView.findViewById(R.id.text1);
             Button button = (Button) convertView.findViewById(R.id.button1);
@@ -138,14 +140,14 @@ public class SettingsActivityList extends ExpandableListActivity implements OnCl
         }
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            
+
             if (convertView == null) {
                 convertView = mInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
             }
-            
+
             Group group = mGroups.get(groupPosition);
             ((TextView)convertView.findViewById(android.R.id.text1)).setText(group.titleTextId);
-            
+
             return convertView;
         }
 
@@ -156,129 +158,129 @@ public class SettingsActivityList extends ExpandableListActivity implements OnCl
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;
         }
-	    
-	}
-	
-	
-	class CollectActivitiesTask extends AsyncTask<Void, Group, Void> {
 
-		@Override
-		protected void onPreExecute() {
-			setProgressBarIndeterminateVisibility(true);
-		}
+    }
 
-		@Override
-		protected void onPostExecute(Void param) {
-			setProgressBarIndeterminateVisibility(false);
-		}
 
-		protected void onProgressUpdate(Group...group) {
-		    ExpandableListAdapter adapter = mAdapter;
-			adapter.mGroups.add(group[0]);
-			adapter.notifyDataSetChanged();
-		}
+    class CollectActivitiesTask extends AsyncTask<Void, Group, Void> {
 
-		@Override
-		protected Void doInBackground(Void... params) {
+        @Override
+        protected void onPreExecute() {
+            setProgressBarIndeterminateVisibility(true);
+        }
 
-		    Group group;		    
-		    
-		    // get check all recommended activities
-		    { 
-    		    final Intent intent = new Intent();
-    		    group = new Group(R.string.txt_recommended);
-                
-    		    FeaturedActivity activity;
-    		    ArrayList<FeaturedActivity> activities = mFeaturedActivities;
+        @Override
+        protected void onPostExecute(Void param) {
+            setProgressBarIndeterminateVisibility(false);
+        }
+
+        protected void onProgressUpdate(Group...group) {
+            ExpandableListAdapter adapter = mAdapter;
+            adapter.mGroups.add(group[0]);
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            Group group;
+
+            // get check all recommended activities
+            {
+                final Intent intent = new Intent();
+                group = new Group(R.string.txt_recommended);
+
+                FeaturedActivity activity;
+                ArrayList<FeaturedActivity> activities = mFeaturedActivities;
                 int size = activities.size();
                 for (int i = 0; i < size; i++) {
-                    activity = activities.get(i); 
+                    activity = activities.get(i);
                     intent.setClassName(activity.packageName, activity.className);
                     List<ResolveInfo> infos = mPackageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
                     for (ResolveInfo info : infos) {
                         group.children.add(info);
                     }
                 }
-    		    
+
                 if (group.children.size() > 0) {
                     publishProgress(group);
                 }
-		    }
-		    
-		    // get other activities
-		    {
+            }
+
+            // get other activities
+            {
                 group = new Group(R.string.txt_other);
-                
+
                 Intent queryIntent = new Intent(Intent.ACTION_MAIN);
                 queryIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                 List<ResolveInfo> list = mPackageManager.queryIntentActivities(queryIntent, 0);
-    
+
                 // Sort the list
                 Collections.sort(list, new ResolveInfo.DisplayNameComparator(mPackageManager));
-    
+
                 String className;
                 for(ResolveInfo item : list) {
-                    
+
                     // remove featured activities from the list
                     className = item.activityInfo.name;
                     int index = Arrays.binarySearch(mFeaturedClassNames, className);
                     if (index < 0) { // not in the list of featured activities
                         group.children.add(item);
                     }
-                    
+
                 }
-                
+
                 if (group.children.size() > 0) {
                     publishProgress(group);
                 }
-		    }
-		    
-			return null;
-		}
+            }
 
-	}
+            return null;
+        }
 
-	PackageManager mPackageManager;
-	ExpandableListAdapter mAdapter;
+    }
+
+    PackageManager mPackageManager;
+    ExpandableListAdapter mAdapter;
     ArrayList<FeaturedActivity> mFeaturedActivities = new ArrayList<FeaturedActivity>();
     String[] mFeaturedClassNames; // search dictionary
 
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		setProgressBarVisibility(true);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setProgressBarVisibility(true);
 
-		setListAdapter(mAdapter = new ExpandableListAdapter(getLayoutInflater()));
-		mPackageManager = getPackageManager();
+        setListAdapter(mAdapter = new ExpandableListAdapter(getLayoutInflater()));
+        mPackageManager = getPackageManager();
 
-		new CollectActivitiesTask().execute();
-		getExpandableListView().setItemsCanFocus(true);
-	}
+        new CollectActivitiesTask().execute();
+        getExpandableListView().setItemsCanFocus(true);
+    }
 
-	public void onClick(View view) {
+    public void onClick(View view) {
 
-		if (view.getId() == R.id.item) {
+        if (view.getId() == R.id.item) {
 
-			ActivityInfo activityInfo = (ActivityInfo) view.getTag();
+            ActivityInfo activityInfo = (ActivityInfo) view.getTag();
 
-			// store configuration
-			SharedPreferences prefs = getApplication().getSharedPreferences(PREFS, MODE_PRIVATE);
-			prefs.edit().putString(PREF_CLASS_NAME, activityInfo.name).putString(PREF_PACKAGE_NAME,
-					activityInfo.packageName).putString(PREF_ACTIVITY_NAME,
-					activityInfo.loadLabel(mPackageManager).toString()).commit();
+            // store configuration
+            SharedPreferences prefs = getApplication().getSharedPreferences(PREFS, MODE_PRIVATE);
+            prefs.edit().putString(PREF_CLASS_NAME, activityInfo.name).putString(PREF_PACKAGE_NAME,
+                    activityInfo.packageName).putString(PREF_ACTIVITY_NAME,
+                            activityInfo.loadLabel(mPackageManager).toString()).commit();
 
-			// exit activity
-			finish();
-		} else {
+            // exit activity
+            finish();
+        } else {
 
-			ActivityInfo activityInfo = (ActivityInfo) view.getTag();
-			String packageName = activityInfo.packageName;
-			String className = activityInfo.name;
+            ActivityInfo activityInfo = (ActivityInfo) view.getTag();
+            String packageName = activityInfo.packageName;
+            String className = activityInfo.name;
 
-			Intent intent = new Intent();
-			intent.setClassName(packageName, className);
-			startActivity(intent);
-		}
-	}
+            Intent intent = new Intent();
+            intent.setClassName(packageName, className);
+            startActivity(intent);
+        }
+    }
 }

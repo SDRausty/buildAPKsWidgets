@@ -38,138 +38,138 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class BatteryWidgetActivity extends Activity implements OnClickListener,
-		android.content.DialogInterface.OnClickListener, Runnable {
+    android.content.DialogInterface.OnClickListener, Runnable {
 
-	private static final int[] LEVELS = new int[] {1, 10, 20, 30, 40, 60, 80, 99, 100};
-	private static final int[] MAPPING = new int[] {0, 3, 2, 1};
+    private static final int[] LEVELS = new int[] {1, 10, 20, 30, 40, 60, 80, 99, 100};
+    private static final int[] MAPPING = new int[] {0, 3, 2, 1};
 
-	private Handler mHandler = new Handler();
-	private SharedPreferences mPrefs;
-	private int mLevel;
-	private int mDesign;
-	
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.configuration);
+    private Handler mHandler = new Handler();
+    private SharedPreferences mPrefs;
+    private int mLevel;
+    private int mDesign;
 
-		findViewById(R.id.link0).setOnClickListener(this);
-		findViewById(R.id.link1).setOnClickListener(this);
-		findViewById(R.id.button1).setOnClickListener(this);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.configuration);
 
-		mPrefs = getApplication().getSharedPreferences(PREFS, MODE_PRIVATE);
-	}
+        findViewById(R.id.link0).setOnClickListener(this);
+        findViewById(R.id.link1).setOnClickListener(this);
+        findViewById(R.id.button1).setOnClickListener(this);
 
-	protected void onPause() {
-		super.onPause();
-		schedulePreviewUpdate(false);
-	}
-	
-	protected void onResume() {
-		super.onResume();
-		
-		// update widgets
-		BatteryService.requestWidgetUpdate(this);
+        mPrefs = getApplication().getSharedPreferences(PREFS, MODE_PRIVATE);
+    }
 
-		Intent intent = getIntent();
-		Bundle extras = intent.getExtras();
-		int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-		if (extras != null) {
-			mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-		}
+    protected void onPause() {
+        super.onPause();
+        schedulePreviewUpdate(false);
+    }
 
-		if (mAppWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-			// set result OK
-			Intent resultValue = new Intent();
-			resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-			setResult(RESULT_OK, resultValue);
-		}
+    protected void onResume() {
+        super.onResume();
 
-		// update description
-		String name = mPrefs.getString(PREF_ACTIVITY_NAME, null);
-		TextView textView = (TextView) findViewById(R.id.assigned_activity_descr);
-		textView.setText(name == null ? getString(R.string.txt_assigned_activity_descr) : name);
+        // update widgets
+        BatteryService.requestWidgetUpdate(this);
 
-		mDesign = mPrefs.getInt(PREF_DESIGN_TYPE, DESIGN_AWFULLY_COOL);
-		updateWidgetPreview(100);
-		
-		mHandler.postDelayed(this, 1000);
-	}
-	
- 	private void updateWidgetPreview(int chargeLevel) {
- 		int design = mDesign;
-		
- 		// lightning
- 		ImageView img = (ImageView) findViewById(R.id.lightning);
- 		img.setVisibility(chargeLevel < 100 ? View.VISIBLE : View.GONE);
- 		
- 		// design
-		img = (ImageView) findViewById(R.id.battery);
-		img.setImageLevel(BatteryWidget.getIconLevel(chargeLevel, design));
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+        if (extras != null) {
+            mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
 
-		TextView capacity_center = (TextView) findViewById(R.id.capacity_center);
-		TextView capacity_right_bottom = (TextView) findViewById(R.id.capacity_right_bottom);
+        if (mAppWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+            // set result OK
+            Intent resultValue = new Intent();
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+            setResult(RESULT_OK, resultValue);
+        }
 
-		String levelText = chargeLevel < 10 ? "0" + chargeLevel : String.valueOf(chargeLevel);
+        // update description
+        String name = mPrefs.getString(PREF_ACTIVITY_NAME, null);
+        TextView textView = (TextView) findViewById(R.id.assigned_activity_descr);
+        textView.setText(name == null ? getString(R.string.txt_assigned_activity_descr) : name);
 
-		if (BatteryWidget.isCapacityRightBottom(design)) { // right-bottom
-			capacity_center.setVisibility(View.GONE);
-			capacity_right_bottom.setText(levelText);
-			capacity_right_bottom.setVisibility(chargeLevel < 100 ? View.VISIBLE : View.GONE);
-		} else { // center
-			capacity_right_bottom.setVisibility(View.GONE);
-			capacity_center.setText(levelText);
-			capacity_center.setVisibility(chargeLevel < 100 ? View.VISIBLE : View.GONE);
-		}
+        mDesign = mPrefs.getInt(PREF_DESIGN_TYPE, DESIGN_AWFULLY_COOL);
+        updateWidgetPreview(100);
 
-		// text
-		Resources res = getResources();
-		String[] designNames = res.getStringArray(R.array.design_names);
-		TextView text = (TextView) findViewById(R.id.design_descr);
-		text.setText(designNames[MAPPING[design]]);
-	}
+        mHandler.postDelayed(this, 1000);
+    }
 
-	public void onClick(View view) {
-		int id = view.getId();
-		if (id == R.id.link0) { // choose design
-			showDialog(0);
-		} else if (id == R.id.link1) {
-			Intent intent = new Intent(this, SettingsActivityList.class);
-			startActivity(intent);
-		} else if (id == R.id.button1) { // done
-			finish();
-		}
-	}
+    private void updateWidgetPreview(int chargeLevel) {
+        int design = mDesign;
 
-	protected Dialog onCreateDialog(int id) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setItems(R.array.design_names, this);
-		builder.setTitle(R.string.txt_select_widget_design);
-		return builder.create();
-	}
+        // lightning
+        ImageView img = (ImageView) findViewById(R.id.lightning);
+        img.setVisibility(chargeLevel < 100 ? View.VISIBLE : View.GONE);
 
-	public void onClick(DialogInterface dialog, int which) {
-		dismissDialog(0);
-		if (which > -1) {
-			mDesign = MAPPING[which];
-			mPrefs.edit().putInt(PREF_DESIGN_TYPE, mDesign).commit();
-			schedulePreviewUpdate(true);
-			BatteryService.requestWidgetUpdate(this);
-		}
-	}
+        // design
+        img = (ImageView) findViewById(R.id.battery);
+        img.setImageLevel(BatteryWidget.getIconLevel(chargeLevel, design));
 
-	public void run() {
-		if (++mLevel == LEVELS.length) {
-			mLevel = 0;
-		}
-		updateWidgetPreview(LEVELS[mLevel]);
-		mHandler.postDelayed(this, 700);
-	}
+        TextView capacity_center = (TextView) findViewById(R.id.capacity_center);
+        TextView capacity_right_bottom = (TextView) findViewById(R.id.capacity_right_bottom);
 
-	private void schedulePreviewUpdate(boolean active) {
-		mHandler.removeCallbacks(this);
-		if (active) {
-			mHandler.post(this);
-		}
-	}
+        String levelText = chargeLevel < 10 ? "0" + chargeLevel : String.valueOf(chargeLevel);
+
+        if (BatteryWidget.isCapacityRightBottom(design)) { // right-bottom
+            capacity_center.setVisibility(View.GONE);
+            capacity_right_bottom.setText(levelText);
+            capacity_right_bottom.setVisibility(chargeLevel < 100 ? View.VISIBLE : View.GONE);
+        } else { // center
+            capacity_right_bottom.setVisibility(View.GONE);
+            capacity_center.setText(levelText);
+            capacity_center.setVisibility(chargeLevel < 100 ? View.VISIBLE : View.GONE);
+        }
+
+        // text
+        Resources res = getResources();
+        String[] designNames = res.getStringArray(R.array.design_names);
+        TextView text = (TextView) findViewById(R.id.design_descr);
+        text.setText(designNames[MAPPING[design]]);
+    }
+
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.link0) { // choose design
+            showDialog(0);
+        } else if (id == R.id.link1) {
+            Intent intent = new Intent(this, SettingsActivityList.class);
+            startActivity(intent);
+        } else if (id == R.id.button1) { // done
+            finish();
+        }
+    }
+
+    protected Dialog onCreateDialog(int id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setItems(R.array.design_names, this);
+        builder.setTitle(R.string.txt_select_widget_design);
+        return builder.create();
+    }
+
+    public void onClick(DialogInterface dialog, int which) {
+        dismissDialog(0);
+        if (which > -1) {
+            mDesign = MAPPING[which];
+            mPrefs.edit().putInt(PREF_DESIGN_TYPE, mDesign).commit();
+            schedulePreviewUpdate(true);
+            BatteryService.requestWidgetUpdate(this);
+        }
+    }
+
+    public void run() {
+        if (++mLevel == LEVELS.length) {
+            mLevel = 0;
+        }
+        updateWidgetPreview(LEVELS[mLevel]);
+        mHandler.postDelayed(this, 700);
+    }
+
+    private void schedulePreviewUpdate(boolean active) {
+        mHandler.removeCallbacks(this);
+        if (active) {
+            mHandler.post(this);
+        }
+    }
 }

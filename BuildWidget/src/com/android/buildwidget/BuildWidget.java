@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 public class BuildWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-            int[] appWidgetIds) {
+                         int[] appWidgetIds) {
         // To prevent any ANR timeouts, we perform the update in a service
         context.startService(new Intent(context, UpdateService.class));
     }
@@ -65,15 +65,15 @@ public class BuildWidget extends AppWidgetProvider {
                 context.getPackageName(), R.layout.widget);
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context,
-                    0 /* no requestCode */, 
-                    new Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS),
-                    0 /* no flags */);
+                                          0 /* no requestCode */,
+                                          new Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS),
+                                          0 /* no flags */);
             updateViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
             updateViews.setTextViewText(R.id.build_info, android.os.Build.ID);
-            updateViews.setTextViewText(R.id.build_date, 
-                    DateUtils.formatDateTime(context, android.os.Build.TIME, 
-                        DateUtils.FORMAT_NUMERIC_DATE));
+            updateViews.setTextViewText(R.id.build_date,
+                                        DateUtils.formatDateTime(context, android.os.Build.TIME,
+                                                DateUtils.FORMAT_NUMERIC_DATE));
             updateViews.setTextViewText(R.id.build_extra, android.os.Build.FINGERPRINT);
             return updateViews;
         }

@@ -19,9 +19,9 @@ import java.util.Calendar;
 
 public class ClockScreenService extends Service {
 
-	private static final String TAG = ClockScreenService.class.getSimpleName();
+    private static final String TAG = ClockScreenService.class.getSimpleName();
 
-	private static final String ACTION_ALARM_CHANGED = "android.app.action.NEXT_ALARM_CLOCK_CHANGED";
+    private static final String ACTION_ALARM_CHANGED = "android.app.action.NEXT_ALARM_CLOCK_CHANGED";
     private static final String ACTION_ALARM_CHANGED_V18 = "android.intent.action.ALARM_CHANGED";
     private static final String ACTION_CLOCK_UPDATE = "community.fairphone.clock.widget.ClockWidget.CLOCK_AM_PM_UPDATE";
 
@@ -33,7 +33,7 @@ public class ClockScreenService extends Service {
     private PendingIntent triggerUpdateIntent;
 
 
-    public ClockScreenService(){
+    public ClockScreenService() {
         Log.d(TAG, "ClockScreenService");
     }
 
@@ -65,7 +65,7 @@ public class ClockScreenService extends Service {
         calendar.add(Calendar.MINUTE, 60 - calendar.get(Calendar.MINUTE));
         calendar.add(Calendar.SECOND, 60 - calendar.get(Calendar.SECOND));
         AlarmManager alarmManager = (AlarmManager) this
-                .getSystemService(Context.ALARM_SERVICE);
+                                    .getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 3600000, getUpdateIntent());
     }
 
@@ -77,16 +77,16 @@ public class ClockScreenService extends Service {
     }
 
     @Override
-	public void onDestroy() {
+    public void onDestroy() {
         Log.d(TAG, "onDestroy");
-		super.onDestroy();
+        super.onDestroy();
 
         clearAMPMManager();
         clearAMPMReceiver();
         clearAlarmChangeReceiver();
         clearTimeChangedReceiver();
         clearLocaleChangeReceiver();
-	}
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -101,17 +101,17 @@ public class ClockScreenService extends Service {
         }
     }
 
-	private void setupAMPMReceiver() {
-		if (mAmPmCheckReceiver == null) {
-			mAmPmCheckReceiver = new BroadcastReceiver() {
-				@Override
-				public void onReceive(Context context, Intent intent) {
-					updateWidget();
-				}
-			};
-			registerReceiver(mAmPmCheckReceiver, new IntentFilter(ACTION_CLOCK_UPDATE));
-		}
-	}
+    private void setupAMPMReceiver() {
+        if (mAmPmCheckReceiver == null) {
+            mAmPmCheckReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    updateWidget();
+                }
+            };
+            registerReceiver(mAmPmCheckReceiver, new IntentFilter(ACTION_CLOCK_UPDATE));
+        }
+    }
 
     private void clearAMPMReceiver() {
         if ( mAmPmCheckReceiver != null ) {
@@ -155,7 +155,7 @@ public class ClockScreenService extends Service {
             };
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 registerReceiver(mAlarmChangedReceiver, new IntentFilter(ACTION_ALARM_CHANGED_V18));
-            }else
+            } else
             {
                 registerReceiver(mAlarmChangedReceiver, new IntentFilter(ACTION_ALARM_CHANGED));
             }
