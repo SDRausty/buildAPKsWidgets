@@ -19,3 +19,6 @@
 [submodule "unix-time-clock-widget"]
 	path = unix-time-clock-widget
 	url = https://github.com/lucas-tulio/unix-time-clock-widget
+[submodule ".scripts/maintenance"]
+	path = .scripts/maintenance
+	url = https://github.com/shlibs/maintenance
