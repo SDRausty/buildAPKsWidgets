@@ -7,6 +7,7 @@ shopt -s nullglob globstar
 . "$RDR/scripts/bash/shlibs/trap.bash" 210 211 212
 cd "$JDR"
 # _AT_ username/repository commit
+_AT_ gregkh/android-clock 1b053fe3d264ecf9b26879258675b83d9161a58c
 _AT_ hc5duke/ClockTzWidget 9494467279aeed215f0e2f8529981ded9de29e2c
 _AT_ LukasKnuth/TinyStackDroid f1881294de65bf4294913988a6971d3f6fdc1db8
 _AT_ samir5421/analog_clock_widget1 27ce768e4507751df02cf2512d0cacc507b64faa
